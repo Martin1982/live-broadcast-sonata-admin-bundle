@@ -1,0 +1,6 @@
+composer.lock
+/vendor/
+testvideo.mp4
+.idea
+composer.phar
+*.cache
