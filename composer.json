@@ -12,8 +12,9 @@
     "require": {
         "php": ">=7.2",
         "ext-fileinfo": "*",
-        "sonata-project/doctrine-orm-admin-bundle": "^3.*",
-        "martin1982/live-broadcast-bundle": "4.x-dev"
+        "sonata-project/doctrine-orm-admin-bundle": "^3.21",
+        "martin1982/live-broadcast-bundle": "dev-4.x-dev",
+        "symfony/framework-bundle": "^4.4|^5.0"
     },
     "require-dev": {
         "roave/security-advisories": "dev-master",
