@@ -50,11 +50,11 @@ class ChannelAdmin extends AbstractAdmin
         $subject = $this->getSubject();
 
         if ($subject instanceof ChannelFacebook && 'edit' === $name) {
-            return 'LiveBroadcastBundle:CRUD:channel_facebook_edit.html.twig';
+            return 'LiveBroadcastSonataAdminBundle:CRUD:channel_facebook_edit.html.twig';
         }
 
         if ($subject instanceof ChannelYouTube && 'edit' === $name) {
-            return 'LiveBroadcastBundle:CRUD:channel_youtube_edit.html.twig';
+            return 'LiveBroadcastSonataAdminBundle:CRUD:channel_youtube_edit.html.twig';
         }
 
         return $this->getTemplateRegistry()->getTemplate($name);
