@@ -90,7 +90,7 @@ class YouTubeBlockService extends AbstractBlockService
         $client->setState($state);
 
         return $this->renderResponse(
-            'LiveBroadcastBundle:Block:youtube_auth.html.twig',
+            'LiveBroadcastSonataAdminBundle:Block:youtube_auth.html.twig',
             [
                 'isAuthenticated' => $isAuthenticated,
                 'authUrl' => $isAuthenticated ? '#' : $client->createAuthUrl(),

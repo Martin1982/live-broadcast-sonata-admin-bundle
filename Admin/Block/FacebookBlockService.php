@@ -56,7 +56,7 @@ class FacebookBlockService extends AbstractBlockService
     public function execute(BlockContextInterface $blockContext, Response $response = null): Response
     {
         return $this->renderResponse(
-            'LiveBroadcastBundle:Block:facebook_auth.html.twig',
+            'LiveBroadcastSonataAdminBundle:Block:facebook_auth.html.twig',
             [
                 'facebookAppId' => $this->apiService->getAppId(),
                 'admin' => $this->admin,
