@@ -82,8 +82,7 @@ return static function (ContainerConfigurator $container) {
 
     $services->set('sonata.block.service.youtubeauth', YouTubeBlockService::class)
         ->args([
-            'sonata.block.service.youtubeauth',
-            new Reference('templating.engine.twig'),
+            new Reference('twig.loader'),
             new Reference('live.broadcast.channel_api.client.google'),
             new Reference('request_stack'),
         ])
@@ -91,8 +90,7 @@ return static function (ContainerConfigurator $container) {
 
     $services->set('sonata.block.service.facebookauth', FacebookBlockService::class)
         ->args([
-            'sonata.block.service.facebookauth',
-            new Reference('templating.engine.twig'),
+            new Reference('twig.loader'),
             new Reference('live.broadcast.facebook_api.service'),
             new Reference('sonata.admin.channel'),
         ])

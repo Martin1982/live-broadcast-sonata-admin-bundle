@@ -1,5 +1,4 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 /**
  * This file is part of martin1982/live-broadcast-sonata-admin-bundle which is released under MIT.
@@ -7,6 +6,7 @@ declare(strict_types=1);
  */
 namespace Martin1982\LiveBroadcastSonataAdminBundle\Admin\Block;
 
+use Google_Client;
 use Martin1982\LiveBroadcastBundle\Exception\LiveBroadcastException;
 use Martin1982\LiveBroadcastBundle\Service\ChannelApi\Client\GoogleClient;
 use Sonata\BlockBundle\Block\BlockContextInterface;
@@ -14,8 +14,8 @@ use Sonata\BlockBundle\Block\Service\AbstractBlockService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Twig\Environment;
 
 /**
  * Class YouTubeBlockService
@@ -35,17 +35,16 @@ class YouTubeBlockService extends AbstractBlockService
     /**
      * YouTubeBlockService constructor
      *
-     * @param string          $name
-     * @param EngineInterface $templating
-     * @param GoogleClient    $googleClient
-     * @param RequestStack    $requestStack
+     * @param Environment  $twig
+     * @param GoogleClient $googleClient
+     * @param RequestStack $requestStack
      */
-    public function __construct($name, EngineInterface $templating, GoogleClient $googleClient, RequestStack $requestStack)
+    public function __construct(Environment $twig, GoogleClient $googleClient, RequestStack $requestStack)
     {
         $this->googleClient = $googleClient;
         $this->requestStack = $requestStack;
 
-        parent::__construct($name, $templating);
+        parent::__construct($twig);
     }
 
     /**
@@ -59,7 +58,7 @@ class YouTubeBlockService extends AbstractBlockService
     public function execute(BlockContextInterface $blockContext, Response $response = null): Response
     {
         $client = $this->googleClient->getClient();
-        if (!$client instanceof \Google_Client) {
+        if (!$client instanceof Google_Client) {
             throw new LiveBroadcastException('Could not load the google client');
         }
 

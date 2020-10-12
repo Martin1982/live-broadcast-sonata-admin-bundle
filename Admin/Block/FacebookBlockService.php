@@ -1,5 +1,4 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 /**
  * This file is part of martin1982/live-broadcast-sonata-admin-bundle which is released under MIT.
@@ -12,7 +11,7 @@ use Martin1982\LiveBroadcastBundle\Service\ChannelApi\FacebookApiService;
 use Sonata\BlockBundle\Block\BlockContextInterface;
 use Sonata\BlockBundle\Block\Service\AbstractBlockService;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Templating\EngineInterface;
+use Twig\Environment;
 
 /**
  * Class FacebookBlockService
@@ -30,19 +29,18 @@ class FacebookBlockService extends AbstractBlockService
     protected $admin;
 
     /**
-     * YouTubeBlockService constructor
+     * FacebookBlockService constructor
      *
-     * @param string             $name
-     * @param EngineInterface    $templating
+     * @param Environment        $twig
      * @param FacebookApiService $apiService
      * @param ChannelAdmin       $admin
      */
-    public function __construct($name, EngineInterface $templating, FacebookApiService $apiService, ChannelAdmin $admin)
+    public function __construct(Environment $twig, FacebookApiService $apiService, ChannelAdmin $admin)
     {
         $this->apiService = $apiService;
         $this->admin = $admin;
 
-        parent::__construct($name, $templating);
+        parent::__construct($twig);
     }
 
     /**
