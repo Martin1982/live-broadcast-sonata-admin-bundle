@@ -46,7 +46,7 @@ services:
     sonata.block.service.youtubeauth:
         class: Martin1982\LiveBroadcastSonataAdminBundle\Admin\Block\YouTubeBlockService
         arguments:
-            - "@twig.loader"
+            - "@twig"
             - "@live.broadcast.channel_api.client.google"
             - "@request_stack"
         tags:
@@ -55,7 +55,7 @@ services:
     sonata.block.service.facebookauth:
         class: Martin1982\LiveBroadcastSonataAdminBundle\Admin\Block\FacebookBlockService
         arguments:
-            - "@twig.loader"
+            - "@twig"
             - "@live.broadcast.facebook_api.service"
             - "@sonata.admin.channel"
         tags:
