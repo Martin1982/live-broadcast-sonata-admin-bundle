@@ -16,7 +16,10 @@ use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
  */
 class LiveBroadcastSonataAdminExtension extends Extension
 {
-    public function load(array $configs, ContainerBuilder $container)
+    /**
+     * @inheritDoc
+     */
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $loader = new PhpFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('admin.php');
