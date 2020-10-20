@@ -12,6 +12,7 @@
     "require": {
         "php": ">=7.2",
         "ext-fileinfo": "*",
+        "sonata-project/admin-bundle": "~3.76.0",
         "sonata-project/doctrine-orm-admin-bundle": "^3.21",
         "martin1982/live-broadcast-bundle": "^4.0",
         "symfony/framework-bundle": "^4.4|^5.0"
