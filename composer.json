@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "php": ">=7.2",
+        "php": ">=7.2|>=8.0",
         "ext-fileinfo": "*",
         "sonata-project/admin-bundle": "^3.78",
         "sonata-project/doctrine-orm-admin-bundle": "^3.24.0",
