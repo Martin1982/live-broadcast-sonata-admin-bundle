@@ -4,4 +4,4 @@ testvideo.mp4
 .idea
 composer.phar
 *.cache
-./docker-compose.yml
+docker-compose.yml
