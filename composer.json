@@ -14,7 +14,7 @@
         "ext-fileinfo": "*",
         "sonata-project/admin-bundle": "^3.78",
         "sonata-project/doctrine-orm-admin-bundle": "^3.24.0",
-        "martin1982/live-broadcast-bundle": "^4.1",
+        "martin1982/live-broadcast-bundle": "dev-master",
         "symfony/framework-bundle": "^4.4|^5.0"
     },
     "require-dev": {
