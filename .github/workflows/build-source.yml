@@ -1,0 +1,13 @@
+name: Static analysis of live-broadcast-sonata-admin-bundle
+on: [push]
+jobs:
+  phpunit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: php-actions/composer@v5
+      - name: Run PHPCS
+        run: ./vendor/bin/phpcs --standard=./vendor/escapestudios/symfony2-coding-standard/Symfony/ Admin/ Controller/ Resources/ Tests/ LiveBroadcastSonataAdminBundle.php
+      - name: Run PHPUnit
+        run: ./vendor/bin/phpunit --coverage-text --colors

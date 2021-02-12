@@ -1,6 +1,6 @@
 # Live Broadcast Sonata Admin Bundle
 
-[![Build status](https://travis-ci.org/Martin1982/live-broadcast-sonata-admin-bundle.svg?branch=master)](https://travis-ci.org/Martin1982/live-broadcast-sonata-admin-bundle)
+[![Build status](https://github.com/martin1982/live-broadcast-sonata-admin-bundle/workflows/Static%20analysis%20of%20live-broadcast-sonata-admin-bundle/badge.svg)](https://github.com/martin1982/live-broadcast-sonata-admin-bundle/workflows/Static%20analysis%20of%20live-broadcast-sonata-admin-bundle/badge.svg)
 [![Latest stable version](https://poser.pugx.org/martin1982/live-broadcast-sonata-admin-bundle/v/stable)](https://packagist.org/packages/martin1982/live-broadcast-sonata-admin-bundle)
 
 [![License](https://poser.pugx.org/martin1982/live-broadcast-sonata-admin-bundle/license)](https://packagist.org/packages/martin1982/live-broadcast-sonata-admin-bundle)
