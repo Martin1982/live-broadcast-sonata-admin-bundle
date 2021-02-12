@@ -7,6 +7,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: php-actions/composer@v5
+        with:
+          php_version: 7.4
       - name: Run PHPCS
         run: ./vendor/bin/phpcs --standard=./vendor/escapestudios/symfony2-coding-standard/Symfony/ Admin/ Controller/ Resources/ Tests/ LiveBroadcastSonataAdminBundle.php
       - name: Run PHPUnit
