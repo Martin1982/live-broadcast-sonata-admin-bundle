@@ -1,6 +1,8 @@
 name: Static analysis of live-broadcast-sonata-admin-bundle
 
 on:
+  schedule:
+    - cron: '0 7 * * 1'
   push:
     branches: [ master ]
   pull_request:
