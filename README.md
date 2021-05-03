@@ -95,8 +95,8 @@ You can use this configuration to set the event loop timer:
         eventloop:
             timer: 5
 
-### Thumbnailer setup
-Setup the following config for thumbnails:
+### Thumbnail setup
+Set up the following config for thumbnails:
     
     live_broadcast:
         thumbnail:
@@ -180,7 +180,7 @@ protected function configureFormFields(FormMapper $formMapper)
 }
 ```
 
-Next add the sub class for the channelAdmin in Resources/config/admin.yml for 
+Next add the subclass for the channelAdmin in Resources/config/admin.yml for 
 
     sonata.admin.channel
         calls:
