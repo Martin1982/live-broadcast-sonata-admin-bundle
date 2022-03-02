@@ -15,7 +15,7 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
@@ -90,7 +90,7 @@ class ChannelAdmin extends AbstractAdmin
     /**
      * {@inheritdoc}
      */
-    protected function configureRoutes(RouteCollection $collection): void
+    protected function configureRoutes(RouteCollectionInterface $collection): void
     {
         $collection->add('longLivedAccessToken', 'facebook/accesstoken');
         $collection->add('youtubeoauth', 'youtube/oauthprovider');
