@@ -6,7 +6,6 @@
  */
 namespace Martin1982\LiveBroadcastSonataAdminBundle\Admin\Block;
 
-use Google_Client;
 use Martin1982\LiveBroadcastBundle\Exception\LiveBroadcastException;
 use Martin1982\LiveBroadcastBundle\Service\ChannelApi\Client\GoogleClient;
 use Sonata\BlockBundle\Block\BlockContextInterface;
@@ -14,7 +13,6 @@ use Sonata\BlockBundle\Block\Service\AbstractBlockService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Twig\Environment;
 
 /**
@@ -25,12 +23,12 @@ class YouTubeBlockService extends AbstractBlockService
     /**
      * @var GoogleClient
      */
-    protected $googleClient;
+    protected GoogleClient $googleClient;
 
     /**
      * @var RequestStack
      */
-    protected $requestStack;
+    protected RequestStack $requestStack;
 
     /**
      * YouTubeBlockService constructor
@@ -58,20 +56,12 @@ class YouTubeBlockService extends AbstractBlockService
     public function execute(BlockContextInterface $blockContext, Response $response = null): Response
     {
         $client = $this->googleClient->getClient();
-        if (!$client instanceof Google_Client) {
-            throw new LiveBroadcastException('Could not load the google client');
-        }
-
         $request = $this->requestStack->getCurrentRequest();
         if (!$request) {
             $request = new Request();
         }
 
         $session = $request->getSession();
-        if (!$session) {
-            $request->setSession(new Session());
-        }
-
         $refreshToken = $session->get('youTubeRefreshToken');
         if ($refreshToken) {
             $client->fetchAccessTokenWithRefreshToken($refreshToken);

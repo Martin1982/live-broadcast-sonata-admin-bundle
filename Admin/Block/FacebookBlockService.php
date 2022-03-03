@@ -21,12 +21,12 @@ class FacebookBlockService extends AbstractBlockService
     /**
      * @var FacebookApiService
      */
-    protected $apiService;
+    protected FacebookApiService $apiService;
 
     /**
      * @var ChannelAdmin
      */
-    protected $admin;
+    protected ChannelAdmin $admin;
 
     /**
      * FacebookBlockService constructor

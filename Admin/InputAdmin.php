@@ -37,27 +37,27 @@ class InputAdmin extends AbstractAdmin
      * {@inheritdoc}
      * @throws \RuntimeException
      */
-    protected function configureFormFields(FormMapper $formMapper): void
+    protected function configureFormFields(FormMapper $form): void
     {
         $subject = $this->getSubject();
 
-        $formMapper
+        $form
             ->tab('General')
             ->with('General');
 
         if ($subject instanceof MediaFile) {
-            $formMapper->add('fileLocation', TextType::class, ['label' => 'File location on server']);
+            $form->add('fileLocation', TextType::class, ['label' => 'File location on server']);
         }
 
         if ($subject instanceof MediaRtmp) {
-            $formMapper->add('rtmpAddress', TextType::class, ['label' => 'Address of the RTMP stream to repeat']);
+            $form->add('rtmpAddress', TextType::class, ['label' => 'Address of the RTMP stream to repeat']);
         }
 
         if ($subject instanceof MediaUrl) {
-            $formMapper->add('url', TextType::class, ['label' => 'URL to video file']);
+            $form->add('url', TextType::class, ['label' => 'URL to video file']);
         }
 
-        $formMapper->end()
+        $form->end()
             ->end();
     }
 
@@ -65,8 +65,8 @@ class InputAdmin extends AbstractAdmin
      * {@inheritdoc}
      * @throws \RuntimeException
      */
-    protected function configureListFields(ListMapper $listMapper): void
+    protected function configureListFields(ListMapper $list): void
     {
-        $listMapper->add('__toString', 'string', ['label' => 'Input']);
+        $list->add('__toString', 'string', ['label' => 'Input']);
     }
 }

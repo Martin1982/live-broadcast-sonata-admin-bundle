@@ -19,6 +19,7 @@ use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\DoctrineORMAdminBundle\Model\ModelManager;
 use Sonata\Form\Type\DateTimePickerType;
+use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -33,7 +34,12 @@ class LiveBroadcastAdmin extends AbstractAdmin
     /**
      * @var string
      */
-    protected $thumbnailPath = '';
+    protected string $thumbnailPath = '';
+
+    /**
+     * @var array
+     */
+    protected array $datagridValues = [];
 
     /**
      * {@inheritdoc}
@@ -101,12 +107,12 @@ class LiveBroadcastAdmin extends AbstractAdmin
     /**
      * {@inheritdoc}
      *
-     * @throws \Symfony\Component\DependencyInjection\Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
      * @throws \RuntimeException
      */
-    protected function configureFormFields(FormMapper $formMapper): void
+    protected function configureFormFields(FormMapper $form): void
     {
-        $formMapper
+        $form
             ->with('General', [
                 'class' => 'col-md-8',
             ])
@@ -165,9 +171,9 @@ class LiveBroadcastAdmin extends AbstractAdmin
      *
      * @throws \RuntimeException
      */
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
+    protected function configureDatagridFilters(DatagridMapper $filter): void
     {
-        $datagridMapper
+        $filter
             ->add('name')
             ->add('startTimestamp')
             ->add('endTimestamp');
@@ -178,9 +184,9 @@ class LiveBroadcastAdmin extends AbstractAdmin
      *
      * @throws \RuntimeException
      */
-    protected function configureListFields(ListMapper $listMapper): void
+    protected function configureListFields(ListMapper $list): void
     {
-        $listMapper
+        $list
             ->addIdentifier('name')
             ->add('outputChannels', 'sonata_type_model', ['label' => 'Channel(s)'])
             ->add('startTimestamp', 'datetime', ['label' => 'Start time'])

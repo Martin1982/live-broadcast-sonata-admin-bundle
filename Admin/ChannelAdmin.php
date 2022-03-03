@@ -27,7 +27,7 @@ class ChannelAdmin extends AbstractAdmin
     /**
      * @var array
      */
-    protected $subclassConfigs = [];
+    protected array $subclassConfigs = [];
 
     /**
      * ChannelAdmin constructor
@@ -43,9 +43,13 @@ class ChannelAdmin extends AbstractAdmin
     }
 
     /**
-     * {@inheritdoc}
+     * Get the correct channel template.
+     *
+     * @param string $name
+     *
+     * @return string
      */
-    public function getTemplate($name): string
+    public function getTemplate(string $name): string
     {
         $subject = $this->getSubject();
 
@@ -65,7 +69,7 @@ class ChannelAdmin extends AbstractAdmin
      *
      * @param array $configs
      */
-    public function setSubclassConfigs($configs): void
+    public function setSubclassConfigs(array $configs): void
     {
         $this->subclassConfigs = $configs;
     }
@@ -73,7 +77,7 @@ class ChannelAdmin extends AbstractAdmin
     /**
      * @param AbstractChannel[] $subclasses
      */
-    public function setConfiguredSubclasses($subclasses): void
+    public function setConfiguredSubclasses(array $subclasses): void
     {
         $configuredSubclasses = [];
         $config = $this->subclassConfigs;
@@ -88,7 +92,9 @@ class ChannelAdmin extends AbstractAdmin
     }
 
     /**
-     * {@inheritdoc}
+     * Configure extra admin routes.
+     *
+     * @param RouteCollectionInterface $collection
      */
     protected function configureRoutes(RouteCollectionInterface $collection): void
     {
@@ -101,7 +107,7 @@ class ChannelAdmin extends AbstractAdmin
      *
      * @throws \RuntimeException
      */
-    protected function configureFormFields(FormMapper $formMapper): void
+    protected function configureFormFields(FormMapper $form): void
     {
         $subject = $this->getSubject();
 
@@ -110,7 +116,7 @@ class ChannelAdmin extends AbstractAdmin
             $nameClasses = 'generic-channel-name input-yt-channelname';
         }
 
-        $formMapper
+        $form
             ->with('Channel')
                 ->add('channelName', TextType::class, [
                     'label' => 'Channel name',
@@ -118,30 +124,30 @@ class ChannelAdmin extends AbstractAdmin
                 ]);
 
         if (!$subject instanceof PlannedChannelInterface) {
-            $formMapper->add('streamKey', TextType::class, ['label' => 'Stream key']);
-            $formMapper->add('streamServer', TextType::class, ['label' => 'Stream server']);
+            $form->add('streamKey', TextType::class, ['label' => 'Stream key']);
+            $form->add('streamServer', TextType::class, ['label' => 'Stream server']);
         }
 
         if ($subject instanceof ChannelFacebook) {
-            $formMapper->add('accessToken', HiddenType::class, [
+            $form->add('accessToken', HiddenType::class, [
                 'attr' => ['class' => 'fb-access-token'],
             ]);
-            $formMapper->add('fbEntityId', HiddenType::class, [
+            $form->add('fbEntityId', HiddenType::class, [
                 'attr' => ['class' => 'fb-entity-id'],
             ]);
         }
 
         if ($subject instanceof ChannelYouTube) {
-            $formMapper->add('youTubeChannelName', TextType::class, [
+            $form->add('youTubeChannelName', TextType::class, [
                 'attr' => ['class' => 'input-yt-channelname', 'readonly' => 'readonly'],
             ]);
 
-            $formMapper->add('refreshToken', TextType::class, [
+            $form->add('refreshToken', TextType::class, [
                 'attr' => ['class' => 'input-yt-refreshtoken', 'readonly' => 'readonly'],
             ]);
         }
 
-        $formMapper->end();
+        $form->end();
     }
 
     /**
@@ -149,9 +155,9 @@ class ChannelAdmin extends AbstractAdmin
      *
      * @throws \RuntimeException
      */
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
+    protected function configureDatagridFilters(DatagridMapper $filter): void
     {
-        $datagridMapper
+        $filter
             ->add('channelName')
             ->add('isHealthy');
     }
@@ -161,9 +167,9 @@ class ChannelAdmin extends AbstractAdmin
      *
      * @throws \RuntimeException
      */
-    protected function configureListFields(ListMapper $listMapper): void
+    protected function configureListFields(ListMapper $list): void
     {
-        $listMapper
+        $list
             ->add('channelName')
             ->add('isHealthy')
             ->add('_action', 'actions', [

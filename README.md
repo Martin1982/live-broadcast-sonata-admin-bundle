@@ -21,7 +21,7 @@
 The Live Broadcast Bundle will make it possible to plan live video streams to
 various channels like Twitch, YouTube Live, Facebook Live (referred to as Output or Channels). 
 
-As "Input" we support files, URL's or existing RTMP streams.
+As "Input" we support files, URLs or existing RTMP streams.
 
 For more info you can view the latest recorded presentation below, check the demo project at https://github.com/Martin1982/live-broadcast-demo or read on;
 
@@ -120,7 +120,7 @@ Edit your `app/config/config.yml` with the following configuration:
             application_id: YourFacebookAppId
             application_secret: YourFacebookAppSecret
 
-When using Sonata Admin; add the Sonata block to your blocks config:
+When using Sonata Admin; add the Sonata block to your `blocks` config:
 
     sonata_block:
         blocks:
@@ -143,7 +143,7 @@ Add the YouTube API info to your config.yml:
             redirect_route: admin_martin1982_livebroadcast_channel_abstractchannel_youtubeoauth
 
  
-When using Sonata Admin; add the Sonata block to your blocks config:
+When using Sonata Admin; add the Sonata block to your `blocks` config:
 
     sonata_block:
         blocks:

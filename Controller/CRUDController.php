@@ -7,12 +7,20 @@
 namespace Martin1982\LiveBroadcastSonataAdminBundle\Controller;
 
 use Facebook\Authentication\AccessToken;
+use Martin1982\LiveBroadcastBundle\Exception\LiveBroadcastOutputException;
 use Martin1982\LiveBroadcastBundle\Service\ChannelApi\Client\GoogleClient;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
+use Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException;
+use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Routing\Exception\InvalidParameterException;
+use Symfony\Component\Routing\Exception\MissingMandatoryParametersException;
+use Symfony\Component\Routing\Exception\RouteNotFoundException;
 
 /**
  * Class CRUDController
@@ -26,11 +34,12 @@ class CRUDController extends Controller
      *
      * @return JsonResponse
      *
-     * @throws \Martin1982\LiveBroadcastBundle\Exception\LiveBroadcastOutputException
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
     public function longLivedAccessTokenAction(Request $request): JsonResponse
     {
-        $facebookService = $this->get('live.broadcast.facebook_api.service');
+        $facebookService = $this->container->get('live.broadcast.facebook_api.service');
         $accessToken = $facebookService->getLongLivedAccessToken($request->get('userAccessToken'));
         $response = new JsonResponse(null, 500);
 
@@ -47,23 +56,20 @@ class CRUDController extends Controller
      *
      * @return RedirectResponse
      *
-     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
-     * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
-     * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
-     * @throws \Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException
-     * @throws \Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException
-     * @throws \Martin1982\LiveBroadcastBundle\Exception\LiveBroadcastOutputException
+     * @throws ContainerExceptionInterface
+     * @throws LiveBroadcastOutputException
+     * @throws NotFoundExceptionInterface
      */
     public function youTubeOAuthAction(Request $request): RedirectResponse
     {
         $session = $request->getSession();
 
-        if ($session && $request->get('cleartoken')) {
+        if ($request->get('cleartoken')) {
             $this->clearToken($session);
         }
 
         $requestCode = $request->get('code');
-        if ($requestCode && $session) {
+        if ($requestCode) {
             $this->checkRequestCode($request, $session);
         }
 
@@ -73,9 +79,9 @@ class CRUDController extends Controller
     /**
      * @param SessionInterface $session
      *
-     * @throws \Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException
-     * @throws \Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException
-     * @throws \Martin1982\LiveBroadcastBundle\Exception\LiveBroadcastOutputException
+     * @throws ContainerExceptionInterface
+     * @throws LiveBroadcastOutputException
+     * @throws NotFoundExceptionInterface
      */
     protected function clearToken(SessionInterface $session): void
     {
@@ -89,9 +95,9 @@ class CRUDController extends Controller
      * @param Request          $request
      * @param SessionInterface $session
      *
-     * @throws \Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException
-     * @throws \Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException
-     * @throws \Martin1982\LiveBroadcastBundle\Exception\LiveBroadcastOutputException
+     * @throws ContainerExceptionInterface
+     * @throws LiveBroadcastOutputException
+     * @throws NotFoundExceptionInterface
      */
     protected function checkRequestCode(Request $request, SessionInterface $session): void
     {
@@ -130,9 +136,9 @@ class CRUDController extends Controller
     /**
      * @return \Google_Client
      *
-     * @throws \Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException
-     * @throws \Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException
-     * @throws \Martin1982\LiveBroadcastBundle\Exception\LiveBroadcastOutputException
+     * @throws ContainerExceptionInterface
+     * @throws LiveBroadcastOutputException
+     * @throws NotFoundExceptionInterface
      */
     private function getGoogleClient(): \Google_Client
     {
