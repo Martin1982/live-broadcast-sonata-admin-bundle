@@ -67,6 +67,11 @@ class InputAdmin extends AbstractAdmin
      */
     protected function configureListFields(ListMapper $list): void
     {
-        $list->add('__toString', 'string', ['label' => 'Input']);
+        $list->add('location', null, [
+            'label' => 'Input',
+            'accessor' => function ($subject) {
+                return (string) $subject;
+            }
+        ]);
     }
 }
