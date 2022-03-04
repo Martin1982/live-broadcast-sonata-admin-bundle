@@ -49,7 +49,7 @@ return static function (ContainerConfigurator $container) {
         ->args([
             null,
             AbstractChannel::class,
-            'LiveBroadcastSonataAdminBundle:CRUD',
+            null,
         ])
         ->tag('sonata.admin', [
             'manager_type' => 'orm',
