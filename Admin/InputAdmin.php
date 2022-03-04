@@ -71,7 +71,7 @@ class InputAdmin extends AbstractAdmin
             'label' => 'Input',
             'accessor' => function ($subject) {
                 return (string) $subject;
-            }
+            },
         ]);
     }
 }
