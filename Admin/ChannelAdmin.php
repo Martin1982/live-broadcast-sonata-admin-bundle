@@ -142,7 +142,7 @@ class ChannelAdmin extends AbstractAdmin
                 'attr' => [
                     'class' => 'input-yt-channelname',
                     'readonly' => 'readonly',
-                    'label' => 'YouTube Channel Name'
+                    'label' => 'YouTube Channel Name',
                 ],
             ]);
 
