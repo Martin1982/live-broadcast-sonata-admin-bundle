@@ -98,7 +98,7 @@ class ChannelAdmin extends AbstractAdmin
             $form
                 ->add('fbConnect', TemplateType::class, [
                     'template' => '@LiveBroadcastSonataAdmin/TemplateField/facebook_auth.html.twig',
-                    'parameters' =>[
+                    'parameters' => [
                         'facebookAppId' => $this->subclassConfigs['facebook']['application_id'],
                     ],
                 ])
@@ -114,7 +114,7 @@ class ChannelAdmin extends AbstractAdmin
             $form
                 ->add('fbConnect', TemplateType::class, [
                     'template' => '@LiveBroadcastSonataAdmin/TemplateField/youtube_auth.html.twig',
-                    'parameters' =>[
+                    'parameters' => [
                         'facebookAppId' => $this->subclassConfigs['facebook']['application_id'],
                     ],
                 ])
