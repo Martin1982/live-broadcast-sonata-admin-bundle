@@ -21,19 +21,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 class InputAdmin extends AbstractAdmin
 {
     /**
-     * InputAdmin constructor
-     *
-     * @param string $code
-     * @param string $class
-     * @param string $baseControllerName
-     */
-    public function __construct(string $code, string $class, string $baseControllerName)
-    {
-        $this->baseRoutePattern = 'broadcast-input';
-        parent::__construct($code, $class, $baseControllerName);
-    }
-
-    /**
      * {@inheritdoc}
      * @throws \RuntimeException
      */
@@ -73,5 +60,15 @@ class InputAdmin extends AbstractAdmin
                 return (string) $subject;
             },
         ]);
+    }
+
+    /**
+     * @param bool $isChildAdmin
+     *
+     * @return string
+     */
+    protected function generateBaseRoutePattern(bool $isChildAdmin = false): string
+    {
+        return 'broadcast-input';
     }
 }

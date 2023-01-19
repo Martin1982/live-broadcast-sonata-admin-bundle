@@ -46,7 +46,6 @@ class LiveBroadcastAdmin extends AbstractAdmin
      */
     public function __construct(string $code, string $class, string $baseControllerName)
     {
-        $this->baseRoutePattern = 'broadcast';
         $this->datagridValues = [
             '_page' => 1,
             '_sort_order' => 'DESC',
@@ -198,5 +197,15 @@ class LiveBroadcastAdmin extends AbstractAdmin
                 ],
             ])
         ;
+    }
+
+    /**
+     * @param bool $isChildAdmin
+     *
+     * @return string
+     */
+    protected function generateBaseRoutePattern(bool $isChildAdmin = false): string
+    {
+        return 'broadcast';
     }
 }

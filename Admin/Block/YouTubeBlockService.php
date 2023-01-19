@@ -21,27 +21,14 @@ use Twig\Environment;
 class YouTubeBlockService extends AbstractBlockService
 {
     /**
-     * @var GoogleClient
-     */
-    protected GoogleClient $googleClient;
-
-    /**
-     * @var RequestStack
-     */
-    protected RequestStack $requestStack;
-
-    /**
      * YouTubeBlockService constructor
      *
      * @param Environment  $twig
      * @param GoogleClient $googleClient
      * @param RequestStack $requestStack
      */
-    public function __construct(Environment $twig, GoogleClient $googleClient, RequestStack $requestStack)
+    public function __construct(Environment $twig, protected GoogleClient $googleClient, protected RequestStack $requestStack)
     {
-        $this->googleClient = $googleClient;
-        $this->requestStack = $requestStack;
-
         parent::__construct($twig);
     }
 

@@ -16,13 +16,10 @@ use Martin1982\LiveBroadcastBundle\Entity\Media\AbstractMedia;
 use Martin1982\LiveBroadcastBundle\Entity\Media\MediaFile;
 use Martin1982\LiveBroadcastBundle\Entity\Media\MediaRtmp;
 use Martin1982\LiveBroadcastBundle\Entity\Media\MediaUrl;
-use Martin1982\LiveBroadcastSonataAdminBundle\Admin\Block\FacebookBlockService;
-use Martin1982\LiveBroadcastSonataAdminBundle\Admin\Block\YouTubeBlockService;
 use Martin1982\LiveBroadcastSonataAdminBundle\Admin\ChannelAdmin;
 use Martin1982\LiveBroadcastSonataAdminBundle\Admin\InputAdmin;
 use Martin1982\LiveBroadcastSonataAdminBundle\Admin\LiveBroadcastAdmin;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * Return configuration closure
@@ -79,20 +76,4 @@ return static function (ContainerConfigurator $container) {
             'URL' => MediaUrl::class,
             'RTMP' => MediaRtmp::class,
         ]]);
-
-    $services->set('sonata.block.service.youtubeauth', YouTubeBlockService::class)
-        ->args([
-            new Reference('twig'),
-            new Reference('live.broadcast.channel_api.client.google'),
-            new Reference('request_stack'),
-        ])
-        ->tag('sonata.block');
-
-    $services->set('sonata.block.service.facebookauth', FacebookBlockService::class)
-        ->args([
-            new Reference('twig'),
-            new Reference('live.broadcast.facebook_api.service'),
-            new Reference('sonata.admin.channel'),
-        ])
-        ->tag('sonata.block');
 };

@@ -19,27 +19,14 @@ use Twig\Environment;
 class FacebookBlockService extends AbstractBlockService
 {
     /**
-     * @var FacebookApiService
-     */
-    protected FacebookApiService $apiService;
-
-    /**
-     * @var ChannelAdmin
-     */
-    protected ChannelAdmin $admin;
-
-    /**
      * FacebookBlockService constructor
      *
      * @param Environment        $twig
      * @param FacebookApiService $apiService
      * @param ChannelAdmin       $admin
      */
-    public function __construct(Environment $twig, FacebookApiService $apiService, ChannelAdmin $admin)
+    public function __construct(Environment $twig, protected FacebookApiService $apiService, protected ChannelAdmin $admin)
     {
-        $this->apiService = $apiService;
-        $this->admin = $admin;
-
         parent::__construct($twig);
     }
 

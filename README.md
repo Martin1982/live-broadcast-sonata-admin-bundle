@@ -120,13 +120,6 @@ Edit your `app/config/config.yml` with the following configuration:
             application_id: YourFacebookAppId
             application_secret: YourFacebookAppSecret
 
-When using Sonata Admin; add the Sonata block to your `blocks` config:
-
-    sonata_block:
-        blocks:
-        sonata.block.service.facebookauth:
-            contexts:   [admin]
-
 ## Enabling YouTube Live
 
 Login to https://console.developers.google.com/ and enable the 'YouTube Data API v3'.
@@ -141,15 +134,7 @@ Add the YouTube API info to your config.yml:
             client_id: YourGoogleOauthClientId
             client_secret: YourGoogleOauthClientSecret
             redirect_route: admin_martin1982_livebroadcast_channel_abstractchannel_youtubeoauth
-
  
-When using Sonata Admin; add the Sonata block to your `blocks` config:
-
-    sonata_block:
-        blocks:
-        sonata.block.service.youtubeauth:
-            contexts:   [admin]
-             
 Add these lines to your parameters.yml (used for generating a thumbnail URL)
 
     parameters:

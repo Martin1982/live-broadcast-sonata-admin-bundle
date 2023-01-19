@@ -15,6 +15,7 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\TemplateType;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -28,41 +29,6 @@ class ChannelAdmin extends AbstractAdmin
      * @var array
      */
     protected array $subclassConfigs = [];
-
-    /**
-     * ChannelAdmin constructor
-     *
-     * @param string $code
-     * @param string $class
-     * @param string $baseControllerName
-     */
-    public function __construct(string $code, string $class, string $baseControllerName)
-    {
-        $this->baseRoutePattern = 'channel';
-        parent::__construct($code, $class, $baseControllerName);
-    }
-
-    /**
-     * Get the correct channel template.
-     *
-     * @param string $name
-     *
-     * @return string
-     */
-    public function getTemplate(string $name): string
-    {
-        $subject = $this->getSubject();
-
-        if ($subject instanceof ChannelFacebook && 'edit' === $name) {
-            return 'LiveBroadcastSonataAdminBundle:CRUD:channel_facebook_edit.html.twig';
-        }
-
-        if ($subject instanceof ChannelYouTube && 'edit' === $name) {
-            return 'LiveBroadcastSonataAdminBundle:CRUD:channel_youtube_edit.html.twig';
-        }
-
-        return $this->getTemplateRegistry()->getTemplate($name);
-    }
 
     /**
      * Set configuration for the subclass configs
@@ -129,26 +95,39 @@ class ChannelAdmin extends AbstractAdmin
         }
 
         if ($subject instanceof ChannelFacebook) {
-            $form->add('accessToken', HiddenType::class, [
-                'attr' => ['class' => 'fb-access-token'],
-            ]);
-            $form->add('fbEntityId', HiddenType::class, [
-                'attr' => ['class' => 'fb-entity-id'],
-            ]);
+            $form
+                ->add('fbConnect', TemplateType::class, [
+                    'template' => '@LiveBroadcastSonataAdmin/TemplateField/facebook_auth.html.twig',
+                    'parameters' =>[
+                        'facebookAppId' => $this->subclassConfigs['facebook']['application_id'],
+                    ],
+                ])
+                ->add('accessToken', HiddenType::class, [
+                    'attr' => ['class' => 'fb-access-token'],
+                ])
+                ->add('fbEntityId', HiddenType::class, [
+                    'attr' => ['class' => 'fb-entity-id'],
+                ]);
         }
 
         if ($subject instanceof ChannelYouTube) {
-            $form->add('youTubeChannelName', TextType::class, [
-                'attr' => [
-                    'class' => 'input-yt-channelname',
-                    'readonly' => 'readonly',
-                    'label' => 'YouTube Channel Name',
-                ],
-            ]);
-
-            $form->add('refreshToken', TextType::class, [
-                'attr' => ['class' => 'input-yt-refreshtoken', 'readonly' => 'readonly'],
-            ]);
+            $form
+                ->add('fbConnect', TemplateType::class, [
+                    'template' => '@LiveBroadcastSonataAdmin/TemplateField/youtube_auth.html.twig',
+                    'parameters' =>[
+                        'facebookAppId' => $this->subclassConfigs['facebook']['application_id'],
+                    ],
+                ])
+                ->add('youTubeChannelName', TextType::class, [
+                    'attr' => [
+                        'class' => 'input-yt-channelname',
+                        'readonly' => 'readonly',
+                        'label' => 'YouTube Channel Name',
+                    ],
+                ])
+                ->add('refreshToken', TextType::class, [
+                    'attr' => ['class' => 'input-yt-refreshtoken', 'readonly' => 'readonly'],
+                ]);
         }
 
         $form->end();
@@ -182,5 +161,15 @@ class ChannelAdmin extends AbstractAdmin
                     'delete' => [],
                 ],
             ]);
+    }
+
+    /**
+     * @param bool $isChildAdmin
+     *
+     * @return string
+     */
+    protected function generateBaseRoutePattern(bool $isChildAdmin = false): string
+    {
+        return 'channel';
     }
 }
