@@ -39,21 +39,11 @@ class LiveBroadcastAdmin extends AbstractAdmin
     /**
      * @var array
      */
-    protected array $datagridValues = [];
-
-    /**
-     * {@inheritdoc}
-     */
-    public function __construct(string $code, string $class, string $baseControllerName)
-    {
-        $this->datagridValues = [
-            '_page' => 1,
-            '_sort_order' => 'DESC',
-            '_sort_by' => 'startTimestamp',
-        ];
-
-        parent::__construct($code, $class, $baseControllerName);
-    }
+    protected array $datagridValues = [
+        '_page' => 1,
+        '_sort_order' => 'DESC',
+        '_sort_by' => 'startTimestamp',
+    ];
 
     /**
      * @param string $path
