@@ -11,6 +11,8 @@ use Martin1982\LiveBroadcastBundle\Entity\Channel\AbstractChannel;
 use Martin1982\LiveBroadcastBundle\Entity\Channel\ChannelFacebook;
 use Martin1982\LiveBroadcastBundle\Entity\Channel\ChannelYouTube;
 use Martin1982\LiveBroadcastBundle\Entity\Channel\PlannedChannelInterface;
+use Martin1982\LiveBroadcastBundle\Service\ChannelApi\FacebookApiService;
+use Martin1982\LiveBroadcastBundle\Service\ChannelApi\YouTubeApiService;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -25,6 +27,16 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
  */
 class ChannelAdmin extends AbstractAdmin
 {
+    /**
+     * @var FacebookApiService
+     */
+    protected FacebookApiService $facebookApiService;
+
+    /**
+     * @var YouTubeApiService
+     */
+    protected YouTubeApiService $youTubeApiService;
+
     /**
      * @var array
      */
@@ -55,6 +67,22 @@ class ChannelAdmin extends AbstractAdmin
         }
 
         $this->setSubClasses($configuredSubclasses);
+    }
+
+    /**
+     * @param FacebookApiService $facebookApiService
+     */
+    public function setFacebookApiService(FacebookApiService $facebookApiService): void
+    {
+        $this->facebookApiService = $facebookApiService;
+    }
+
+    /**
+     * @param YouTubeApiService $youTubeApiService
+     */
+    public function setYouTubeApiService(YouTubeApiService $youTubeApiService): void
+    {
+        $this->youTubeApiService = $youTubeApiService;
     }
 
     /**
@@ -99,7 +127,7 @@ class ChannelAdmin extends AbstractAdmin
                 ->add('fbConnect', TemplateType::class, [
                     'template' => '@LiveBroadcastSonataAdmin/TemplateField/facebook_auth.html.twig',
                     'parameters' => [
-                        'facebookAppId' => $this->subclassConfigs['facebook']['application_id'],
+                        'facebookAppId' => $this->facebookApiService->getAppId(),
                     ],
                 ])
                 ->add('accessToken', HiddenType::class, [

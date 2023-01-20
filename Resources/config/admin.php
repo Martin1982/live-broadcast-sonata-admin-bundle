@@ -16,6 +16,8 @@ use Martin1982\LiveBroadcastBundle\Entity\Media\AbstractMedia;
 use Martin1982\LiveBroadcastBundle\Entity\Media\MediaFile;
 use Martin1982\LiveBroadcastBundle\Entity\Media\MediaRtmp;
 use Martin1982\LiveBroadcastBundle\Entity\Media\MediaUrl;
+use Martin1982\LiveBroadcastBundle\Service\ChannelApi\FacebookApiService;
+use Martin1982\LiveBroadcastBundle\Service\ChannelApi\YouTubeApiService;
 use Martin1982\LiveBroadcastSonataAdminBundle\Admin\ChannelAdmin;
 use Martin1982\LiveBroadcastSonataAdminBundle\Admin\InputAdmin;
 use Martin1982\LiveBroadcastSonataAdminBundle\Admin\LiveBroadcastAdmin;
@@ -28,6 +30,7 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
  */
 return static function (ContainerConfigurator $container) {
     $services = $container->services();
+
     $services->set('sonata.admin.livebroadcast', LiveBroadcastAdmin::class)
         ->args([
             null,
@@ -53,6 +56,8 @@ return static function (ContainerConfigurator $container) {
             'group' => 'Live',
             'label' => 'Channels',
         ])
+        ->call('setFacebookApiService', [FacebookApiService::class])
+        ->call('setYouTubeApiService', [YouTubeApiService::class])
         ->call('setSubclassConfigs', ['%livebroadcast.config%'])
         ->call('setConfiguredSubclasses', [[
             'Twitch' => ChannelTwitch::class,
