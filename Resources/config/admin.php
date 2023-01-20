@@ -16,8 +16,6 @@ use Martin1982\LiveBroadcastBundle\Entity\Media\AbstractMedia;
 use Martin1982\LiveBroadcastBundle\Entity\Media\MediaFile;
 use Martin1982\LiveBroadcastBundle\Entity\Media\MediaRtmp;
 use Martin1982\LiveBroadcastBundle\Entity\Media\MediaUrl;
-use Martin1982\LiveBroadcastBundle\Service\ChannelApi\FacebookApiService;
-use Martin1982\LiveBroadcastBundle\Service\ChannelApi\YouTubeApiService;
 use Martin1982\LiveBroadcastSonataAdminBundle\Admin\ChannelAdmin;
 use Martin1982\LiveBroadcastSonataAdminBundle\Admin\InputAdmin;
 use Martin1982\LiveBroadcastSonataAdminBundle\Admin\LiveBroadcastAdmin;
@@ -32,13 +30,9 @@ use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 return static function (ContainerConfigurator $container) {
     $services = $container->services();
 
-    $services->set('sonata.admin.livebroadcast', LiveBroadcastAdmin::class)
-        ->args([
-            null,
-            LiveBroadcast::class,
-            null,
-        ])
+    $services->set('admin.livebroadcast', LiveBroadcastAdmin::class)
         ->tag('sonata.admin', [
+            'model_class' => LiveBroadcast::class,
             'manager_type' => 'orm',
             'group' => 'Live',
             'label' => 'Live Broadcasts',
@@ -46,13 +40,9 @@ return static function (ContainerConfigurator $container) {
         ->call('setTranslationDomain', [LiveBroadcastAdmin::class])
         ->call('setThumbnailPath', ['%livebroadcast.thumbnail.web_path%']);
 
-    $services->set('sonata.admin.channel', ChannelAdmin::class)
-        ->args([
-            null,
-            AbstractChannel::class,
-            null,
-        ])
+    $services->set('admin.channel', ChannelAdmin::class)
         ->tag('sonata.admin', [
+            'model_class' => AbstractChannel::class,
             'manager_type' => 'orm',
             'group' => 'Live',
             'label' => 'Channels',
@@ -65,13 +55,9 @@ return static function (ContainerConfigurator $container) {
             'YouTube' => ChannelYouTube::class,
         ]]);
 
-    $services->set('sonata.admin.streaminput', InputAdmin::class)
-        ->args([
-            null,
-            AbstractMedia::class,
-            null,
-        ])
+    $services->set('admin.streaminput', InputAdmin::class)
         ->tag('sonata.admin', [
+            'model_class' => AbstractMedia::class,
             'manager_type' => 'orm',
             'group' => 'Live',
             'label' => 'Inputs',
