@@ -32,6 +32,9 @@ use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 return static function (ContainerConfigurator $container) {
     $services = $container->services();
 
+    $services->set(AdminController::class)
+        ->tag('controller.service_arguments');
+
     $services->set('admin.livebroadcast', LiveBroadcastAdmin::class)
         ->tag('sonata.admin', [
             'model_class' => LiveBroadcast::class,
