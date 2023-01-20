@@ -36,16 +36,13 @@ class ChannelAdmin extends AbstractAdmin
     protected array $subclassConfigs = [];
 
     /**
-     * @param string|null     $code
-     * @param string|null     $class
-     * @param string|null     $baseControllerName
      * @param GoogleClient    $googleClient
      * @param ChannelApiStack $channelApiStack
      * @param RequestStack    $requestStack
      */
-    public function __construct(?string $code = null, ?string $class = null, ?string $baseControllerName = null, protected GoogleClient $googleClient, protected ChannelApiStack $channelApiStack, protected RequestStack $requestStack)
+    public function __construct(protected GoogleClient $googleClient, protected ChannelApiStack $channelApiStack, protected RequestStack $requestStack)
     {
-        parent::__construct($code, $class, $baseControllerName);
+        parent::__construct();
     }
 
     /**
