@@ -12,8 +12,8 @@ use Martin1982\LiveBroadcastBundle\Entity\Channel\ChannelFacebook;
 use Martin1982\LiveBroadcastBundle\Entity\Channel\ChannelYouTube;
 use Martin1982\LiveBroadcastBundle\Entity\Channel\PlannedChannelInterface;
 use Martin1982\LiveBroadcastBundle\Service\ChannelApi\ChannelApiStack;
+use Martin1982\LiveBroadcastBundle\Service\ChannelApi\Client\GoogleClient;
 use Martin1982\LiveBroadcastBundle\Service\ChannelApi\FacebookApiService;
-use Martin1982\LiveBroadcastBundle\Service\ChannelApi\YouTubeApiService;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -22,6 +22,8 @@ use Sonata\AdminBundle\Form\Type\TemplateType;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Class ChannelAdmin
@@ -34,9 +36,17 @@ class ChannelAdmin extends AbstractAdmin
     protected array $subclassConfigs = [];
 
     /**
-     * @var ChannelApiStack
+     * @param string|null     $code
+     * @param string|null     $class
+     * @param string|null     $baseControllerName
+     * @param GoogleClient    $googleClient
+     * @param ChannelApiStack $channelApiStack
+     * @param RequestStack    $requestStack
      */
-    protected ChannelApiStack $channelApiStack;
+    public function __construct(?string $code = null, ?string $class = null, ?string $baseControllerName = null, protected GoogleClient $googleClient, protected ChannelApiStack $channelApiStack, protected RequestStack $requestStack)
+    {
+        parent::__construct($code, $class, $baseControllerName);
+    }
 
     /**
      * Set configuration for the subclass configs
@@ -66,14 +76,6 @@ class ChannelAdmin extends AbstractAdmin
     }
 
     /**
-     * @param ChannelApiStack $channelApiStack
-     */
-    public function setChannelApiServices(ChannelApiStack $channelApiStack): void
-    {
-        $this->channelApiStack = $channelApiStack;
-    }
-
-    /**
      * Configure extra admin routes.
      *
      * @param RouteCollectionInterface $collection
@@ -86,8 +88,6 @@ class ChannelAdmin extends AbstractAdmin
 
     /**
      * {@inheritdoc}
-     *
-     * @throws \RuntimeException
      */
     protected function configureFormFields(FormMapper $form): void
     {
@@ -130,14 +130,36 @@ class ChannelAdmin extends AbstractAdmin
         }
 
         if ($subject instanceof ChannelYouTube) {
-            /** @var YouTubeApiService $api */
-            $api = $this->channelApiStack->getApiForChannel($subject);
+            $client = $this->googleClient->getClient();
+            $request = $this->requestStack->getCurrentRequest();
+            if (!$request) {
+                $request = new Request();
+            }
+
+            $session = $request->getSession();
+            $refreshToken = $session->get('youTubeRefreshToken');
+            if ($refreshToken) {
+                $client->fetchAccessTokenWithRefreshToken($refreshToken);
+            }
+
+            $accessToken = $client->getAccessToken();
+            $isAuthenticated = (bool) $accessToken;
+            $state = mt_rand();
+
+            if (!$isAuthenticated) {
+                $session->set('state', $state);
+                $session->set('authreferer', $request->getRequestUri());
+            }
+
+            $client->setState($state);
 
             $form
                 ->add('fbConnect', TemplateType::class, [
                     'template' => '@LiveBroadcastSonataAdmin/TemplateField/youtube_auth.html.twig',
                     'parameters' => [
-                        'facebookAppId' => $this->subclassConfigs['facebook']['application_id'],
+                        'authUrl' => $isAuthenticated ? '#' : $client->createAuthUrl(),
+                        'youTubeChannelName' => $session->get('youTubeChannelName'),
+                        'youTubeRefreshToken' => $session->get('youTubeRefreshToken'),
                     ],
                 ])
                 ->add('youTubeChannelName', TextType::class, [

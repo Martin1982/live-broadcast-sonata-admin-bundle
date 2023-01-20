@@ -20,7 +20,6 @@ use Martin1982\LiveBroadcastSonataAdminBundle\Admin\ChannelAdmin;
 use Martin1982\LiveBroadcastSonataAdminBundle\Admin\InputAdmin;
 use Martin1982\LiveBroadcastSonataAdminBundle\Admin\LiveBroadcastAdmin;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 /**
  * Return configuration closure
@@ -47,7 +46,6 @@ return static function (ContainerConfigurator $container) {
             'group' => 'Live',
             'label' => 'Channels',
         ])
-        ->call('setChannelApiServices', [service('live.broadcast.channel_api.stack')])
         ->call('setSubclassConfigs', ['%livebroadcast.config%'])
         ->call('setConfiguredSubclasses', [[
             'Twitch' => ChannelTwitch::class,
