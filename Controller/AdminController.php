@@ -13,16 +13,16 @@ use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Sonata\AdminBundle\Controller\CRUDController as Controller;
+use Sonata\AdminBundle\Controller\CRUDController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
- * Class CRUDController
+ * Class AdminController
  *
  * @codeCoverageIgnore
  */
-class CRUDController extends Controller
+class AdminController extends CRUDController
 {
     /**
      * @param Request $request

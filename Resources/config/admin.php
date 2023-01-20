@@ -19,6 +19,7 @@ use Martin1982\LiveBroadcastBundle\Entity\Media\MediaUrl;
 use Martin1982\LiveBroadcastSonataAdminBundle\Admin\ChannelAdmin;
 use Martin1982\LiveBroadcastSonataAdminBundle\Admin\InputAdmin;
 use Martin1982\LiveBroadcastSonataAdminBundle\Admin\LiveBroadcastAdmin;
+use Martin1982\LiveBroadcastSonataAdminBundle\Controller\AdminController;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\HttpFoundation\RequestStack;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
@@ -49,6 +50,7 @@ return static function (ContainerConfigurator $container) {
         ])
         ->tag('sonata.admin', [
             'model_class' => AbstractChannel::class,
+            'controller' => AdminController::class,
             'manager_type' => 'orm',
             'group' => 'Live',
             'label' => 'Channels',
