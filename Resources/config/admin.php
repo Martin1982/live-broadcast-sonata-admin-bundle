@@ -33,7 +33,8 @@ return static function (ContainerConfigurator $container) {
     $services = $container->services();
 
     $services->set(AdminController::class)
-        ->tag('controller.service_arguments');
+        ->tag('controller.service_arguments')
+        ->call('setContainer', [service('service_container')]);
 
     $services->set('admin.livebroadcast', LiveBroadcastAdmin::class)
         ->tag('sonata.admin', [
