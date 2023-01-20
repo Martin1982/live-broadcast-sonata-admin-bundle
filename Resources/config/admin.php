@@ -56,8 +56,7 @@ return static function (ContainerConfigurator $container) {
             'group' => 'Live',
             'label' => 'Channels',
         ])
-        ->call('setFacebookApiService', [FacebookApiService::class])
-        ->call('setYouTubeApiService', [YouTubeApiService::class])
+        ->call('setChannelApiServices', ['live.broadcast.channel_api.stack'])
         ->call('setSubclassConfigs', ['%livebroadcast.config%'])
         ->call('setConfiguredSubclasses', [[
             'Twitch' => ChannelTwitch::class,

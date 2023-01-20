@@ -11,6 +11,7 @@ use Martin1982\LiveBroadcastBundle\Entity\Channel\AbstractChannel;
 use Martin1982\LiveBroadcastBundle\Entity\Channel\ChannelFacebook;
 use Martin1982\LiveBroadcastBundle\Entity\Channel\ChannelYouTube;
 use Martin1982\LiveBroadcastBundle\Entity\Channel\PlannedChannelInterface;
+use Martin1982\LiveBroadcastBundle\Service\ChannelApi\ChannelApiStack;
 use Martin1982\LiveBroadcastBundle\Service\ChannelApi\FacebookApiService;
 use Martin1982\LiveBroadcastBundle\Service\ChannelApi\YouTubeApiService;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
@@ -28,19 +29,14 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 class ChannelAdmin extends AbstractAdmin
 {
     /**
-     * @var FacebookApiService
-     */
-    protected FacebookApiService $facebookApiService;
-
-    /**
-     * @var YouTubeApiService
-     */
-    protected YouTubeApiService $youTubeApiService;
-
-    /**
      * @var array
      */
     protected array $subclassConfigs = [];
+
+    /**
+     * @var ChannelApiStack
+     */
+    protected ChannelApiStack $channelApiStack;
 
     /**
      * Set configuration for the subclass configs
@@ -70,19 +66,11 @@ class ChannelAdmin extends AbstractAdmin
     }
 
     /**
-     * @param FacebookApiService $facebookApiService
+     * @param ChannelApiStack $channelApiStack
      */
-    public function setFacebookApiService(FacebookApiService $facebookApiService): void
+    public function setChannelApiServices(ChannelApiStack $channelApiStack): void
     {
-        $this->facebookApiService = $facebookApiService;
-    }
-
-    /**
-     * @param YouTubeApiService $youTubeApiService
-     */
-    public function setYouTubeApiService(YouTubeApiService $youTubeApiService): void
-    {
-        $this->youTubeApiService = $youTubeApiService;
+        $this->channelApiStack = $channelApiStack;
     }
 
     /**
@@ -123,11 +111,14 @@ class ChannelAdmin extends AbstractAdmin
         }
 
         if ($subject instanceof ChannelFacebook) {
+            /** @var FacebookApiService $api */
+            $api = $this->channelApiStack->getApiForChannel($subject);
+
             $form
                 ->add('fbConnect', TemplateType::class, [
                     'template' => '@LiveBroadcastSonataAdmin/TemplateField/facebook_auth.html.twig',
                     'parameters' => [
-                        'facebookAppId' => $this->facebookApiService->getAppId(),
+                        'facebookAppId' => $api->getAppId(),
                     ],
                 ])
                 ->add('accessToken', HiddenType::class, [
@@ -139,6 +130,9 @@ class ChannelAdmin extends AbstractAdmin
         }
 
         if ($subject instanceof ChannelYouTube) {
+            /** @var YouTubeApiService $api */
+            $api = $this->channelApiStack->getApiForChannel($subject);
+
             $form
                 ->add('fbConnect', TemplateType::class, [
                     'template' => '@LiveBroadcastSonataAdmin/TemplateField/youtube_auth.html.twig',
