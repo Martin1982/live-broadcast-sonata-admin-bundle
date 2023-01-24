@@ -19,8 +19,6 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * Class AdminController
- *
- * @codeCoverageIgnore
  */
 class AdminController extends CRUDController
 {

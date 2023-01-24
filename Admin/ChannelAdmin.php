@@ -19,7 +19,6 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\TemplateType;
-use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
@@ -70,17 +69,6 @@ class ChannelAdmin extends AbstractAdmin
         }
 
         $this->setSubClasses($configuredSubclasses);
-    }
-
-    /**
-     * Configure extra admin routes.
-     *
-     * @param RouteCollectionInterface $collection
-     */
-    protected function configureRoutes(RouteCollectionInterface $collection): void
-    {
-        $collection->add('longLivedAccessToken', 'facebook/accesstoken');
-        $collection->add('youtubeoauth', 'youtube/oauthprovider');
     }
 
     /**
