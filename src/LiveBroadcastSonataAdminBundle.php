@@ -11,12 +11,12 @@ use Martin1982\LiveBroadcastBundle\DependencyInjection\Compiler\AddChannelApiPas
 use Martin1982\LiveBroadcastBundle\DependencyInjection\Compiler\AddStreamInputPass;
 use Martin1982\LiveBroadcastBundle\DependencyInjection\Compiler\AddStreamOutputPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 
 /**
  * Class LiveBroadcastBundle.
  */
-class LiveBroadcastSonataAdminBundle extends Bundle
+class LiveBroadcastSonataAdminBundle extends AbstractBundle
 {
     /**
      * {@inheritdoc}
