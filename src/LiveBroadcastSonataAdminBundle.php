@@ -7,10 +7,6 @@ declare(strict_types=1);
  */
 namespace Martin1982\LiveBroadcastSonataAdminBundle;
 
-use Martin1982\LiveBroadcastBundle\DependencyInjection\Compiler\AddChannelApiPass;
-use Martin1982\LiveBroadcastBundle\DependencyInjection\Compiler\AddStreamInputPass;
-use Martin1982\LiveBroadcastBundle\DependencyInjection\Compiler\AddStreamOutputPass;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 
 /**
@@ -18,14 +14,4 @@ use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
  */
 class LiveBroadcastSonataAdminBundle extends AbstractBundle
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function build(ContainerBuilder $container): void
-    {
-        parent::build($container);
-        $container->addCompilerPass(new AddStreamOutputPass());
-        $container->addCompilerPass(new AddStreamInputPass());
-        $container->addCompilerPass(new AddChannelApiPass());
-    }
 }
