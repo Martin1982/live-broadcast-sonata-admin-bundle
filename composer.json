@@ -28,6 +28,13 @@
         "squizlabs/php_codesniffer": "^3.5"
     },
     "autoload": {
-        "psr-4": { "Martin1982\\LiveBroadcastSonataAdminBundle\\": "" }
+        "psr-4": {
+            "Martin1982\\LiveBroadcastSonataAdminBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Martin1982\\LiveBroadcastSonataAdminBundle\\Tests\\": "tests/"
+        }
     }
 }

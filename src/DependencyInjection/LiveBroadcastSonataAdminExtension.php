@@ -4,7 +4,7 @@
  * This file is part of martin1982/live-broadcast-sonata-admin-bundle which is released under MIT.
  * See https://opensource.org/licenses/MIT for full license details.
  */
-namespace Martin1982\LiveBroadcastSonataAdminBundle\DependencyInjection;
+namespace Martin1982\LiveBroadcastSonataAdminBundle\src\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
