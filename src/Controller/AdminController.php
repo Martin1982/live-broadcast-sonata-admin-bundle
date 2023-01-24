@@ -4,7 +4,7 @@
  * This file is part of martin1982/live-broadcast-sonata-admin-bundle which is released under MIT.
  * See https://opensource.org/licenses/MIT for full license details.
  */
-namespace Martin1982\LiveBroadcastSonataAdminBundle\src\Controller;
+namespace Martin1982\LiveBroadcastSonataAdminBundle\Controller;
 
 use Facebook\Authentication\AccessToken;
 use Martin1982\LiveBroadcastBundle\Exception\LiveBroadcastOutputException;
