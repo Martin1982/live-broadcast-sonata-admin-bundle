@@ -4,7 +4,7 @@
  * This file is part of martin1982/live-broadcast-sonata-admin-bundle which is released under MIT.
  * See https://opensource.org/licenses/MIT for full license details.
  */
-namespace Martin1982\LiveBroadcastSonataAdminBundle\src\DependencyInjection;
+namespace Martin1982\LiveBroadcastSonataAdminBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -23,7 +23,7 @@ class LiveBroadcastSonataAdminExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container): void
     {
-        $loader = new PhpFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new PhpFileLoader($container, new FileLocator(__DIR__.'/config'));
         $loader->load('admin.php');
     }
 }
