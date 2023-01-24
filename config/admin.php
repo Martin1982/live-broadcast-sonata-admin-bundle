@@ -19,7 +19,10 @@ use Martin1982\LiveBroadcastBundle\Entity\Media\MediaUrl;
 use Martin1982\LiveBroadcastSonataAdminBundle\Admin\ChannelAdmin;
 use Martin1982\LiveBroadcastSonataAdminBundle\Admin\InputAdmin;
 use Martin1982\LiveBroadcastSonataAdminBundle\Admin\LiveBroadcastAdmin;
+use Martin1982\LiveBroadcastSonataAdminBundle\Controller\AdminController;
+use Psr\Container\ContainerInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
 use Symfony\Component\HttpFoundation\RequestStack;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
@@ -30,6 +33,11 @@ use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
  */
 return static function (ContainerConfigurator $container) {
     $services = $container->services();
+
+    $services->set('martin1982.controller.sonata.admin', AdminController::class)
+        ->public()
+        ->tag('container.service_subscriber')
+        ->call('setContainer', [new ReferenceConfigurator(ContainerInterface::class)]);
 
     $services->set('admin.livebroadcast', LiveBroadcastAdmin::class)
         ->public()

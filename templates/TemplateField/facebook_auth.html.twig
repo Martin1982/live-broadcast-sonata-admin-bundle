@@ -99,7 +99,7 @@
 
                     /* Get a long-lived access token for the user access token */
                     $.ajax({
-                        url: '{{ admin.generateUrl('longLivedAccessToken') }}',
+                        url: '{{ path('livebroadcast.sonata.fb_long_lived_access_token') }}',
                         data: {
                             'userAccessToken': FB.getAccessToken()
                         },
