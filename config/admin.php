@@ -32,6 +32,7 @@ return static function (ContainerConfigurator $container) {
     $services = $container->services();
 
     $services->set('admin.livebroadcast', LiveBroadcastAdmin::class)
+        ->public()
         ->tag('sonata.admin', [
             'model_class' => LiveBroadcast::class,
             'manager_type' => 'orm',
@@ -42,6 +43,7 @@ return static function (ContainerConfigurator $container) {
         ->call('setThumbnailPath', ['%livebroadcast.thumbnail.web_path%']);
 
     $services->set('admin.channel', ChannelAdmin::class)
+        ->public()
         ->args([
             service('live.broadcast.channel_api.client.google'),
             service('live.broadcast.channel_api.stack'),
@@ -61,6 +63,7 @@ return static function (ContainerConfigurator $container) {
         ]]);
 
     $services->set('admin.streaminput', InputAdmin::class)
+        ->public()
         ->tag('sonata.admin', [
             'model_class' => AbstractMedia::class,
             'manager_type' => 'orm',
