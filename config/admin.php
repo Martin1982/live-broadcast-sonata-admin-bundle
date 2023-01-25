@@ -37,6 +37,7 @@ return static function (ContainerConfigurator $container) {
     $services->set('martin1982.controller.sonata.admin', AdminController::class)
         ->public()
         ->tag('controller.service_arguments')
+        ->tag('container.service_subscriber')
         ->call('setContainer', [new ReferenceConfigurator(ContainerInterface::class)]);
 
     $services->set('admin.livebroadcast', LiveBroadcastAdmin::class)
