@@ -6,7 +6,7 @@
     <div class="box-body">
         <div class="sonata-ba-collapsed-fields">
             <div class="form-group">
-                {% if isAuthenticated %}
+                {% if authUrl == '#' %}
                     <p>Your current YouTube channel selection is: <strong>{{ youTubeChannelName }}</strong></p>
                     <p><button class="btn btn-warning broadcast-youtube-switch">Switch to another YouTube channel/account</button></p>
                     <p><button class="btn btn-primary broadcast-youtube-attach">Attach this YouTube channel/account</button></p>
