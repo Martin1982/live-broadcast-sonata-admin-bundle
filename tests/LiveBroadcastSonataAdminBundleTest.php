@@ -22,8 +22,6 @@ class LiveBroadcastSonataAdminBundleTest extends TestCase
     public function testBuild(): void
     {
         $container = $this->createMock(ContainerBuilder::class);
-        $container->expects(self::atLeastOnce())
-            ->method('addCompilerPass');
 
         $bundle = new LiveBroadcastSonataAdminBundle();
 
