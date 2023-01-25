@@ -101,6 +101,7 @@ class ChannelAdmin extends AbstractAdmin
 
             $form
                 ->add('fbConnect', TemplateType::class, [
+                    'label' => 'Facebook login',
                     'template' => '@LiveBroadcastSonataAdmin/TemplateField/facebook_auth.html.twig',
                     'parameters' => [
                         'facebookAppId' => $api->getAppId(),
@@ -139,7 +140,8 @@ class ChannelAdmin extends AbstractAdmin
             $client->setState($state);
 
             $form
-                ->add('fbConnect', TemplateType::class, [
+                ->add('ytConnect', TemplateType::class, [
+                    'label' => 'YouTube login',
                     'template' => '@LiveBroadcastSonataAdmin/TemplateField/youtube_auth.html.twig',
                     'parameters' => [
                         'authUrl' => $isAuthenticated ? '#' : $client->createAuthUrl(),

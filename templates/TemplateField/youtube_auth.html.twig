@@ -1,11 +1,8 @@
 <div class="box box-primary">
-    <div class="box-header">
-        <h4 class="box-title">YouTube Login</h4>
-        <p id="yt-status">Login with YouTube and choose from your available YouTube channels.</p>
-    </div>
     <div class="box-body">
         <div class="sonata-ba-collapsed-fields">
             <div class="form-group">
+                <p id="yt-status">Login with YouTube and choose from your available YouTube channels.</p>
                 {% if authUrl == '#' %}
                     <p>Your current YouTube channel selection is: <strong>{{ youTubeChannelName }}</strong></p>
                     <p><button class="btn btn-warning broadcast-youtube-switch">Switch to another YouTube channel/account</button></p>
