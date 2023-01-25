@@ -38,7 +38,7 @@ return static function (ContainerConfigurator $container) {
         ->public()
         ->tag('controller.service_arguments')
         ->tag('container.service_subscriber')
-        ->call('setContainer', [new ReferenceConfigurator(ContainerInterface::class)]);
+        ->call('setContainer', [service('service_container')]);
 
     $services->set('admin.livebroadcast', LiveBroadcastAdmin::class)
         ->public()
