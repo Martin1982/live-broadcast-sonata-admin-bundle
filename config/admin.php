@@ -34,7 +34,7 @@ use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 return static function (ContainerConfigurator $container) {
     $services = $container->services();
 
-    $services->set('martin1982.controller.sonata.admin', AdminController::class)
+    $services->set(AdminController::class)
         ->public()
         ->tag('controller.service_arguments')
         ->tag('container.service_subscriber')
