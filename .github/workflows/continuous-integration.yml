@@ -37,7 +37,7 @@ jobs:
         run: composer install --prefer-dist --no-progress --no-suggest
 
       - name: Run PHPCS
-        run: ./vendor/bin/phpcs --standard=./vendor/escapestudios/symfony2-coding-standard/Symfony/ Admin/ Controller/ Resources/ Tests/ LiveBroadcastSonataAdminBundle.php
+        run: ./vendor/bin/phpcs --standard=./vendor/escapestudios/symfony2-coding-standard/Symfony/ src/Admin/ src/Controller/ src/LiveBroadcastSonataAdminBundle.php
 
       - name: Run PHPUnit
         run: ./vendor/bin/phpunit --coverage-text --colors
